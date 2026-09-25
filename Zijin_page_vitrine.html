@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zijin, le jeu de plateau qui fait grandir</title>
+<meta name="description" content="Zijin, une course au trésor illustrée à jouer en famille sur smartphone et tablette. L'enfant compte, anticipe et décide en jouant. Sans publicité, sans compte, sans connexion.">
+<!--
+  Présentation vitrine de Zijin — AA Digital Learning Systems.
+  Intégration : tout le contenu est dans <div class="zj">, tous les styles sont préfixés « zj- »
+  pour ne pas entrer en conflit avec le site. Polices : MedievalSharp (celle de l'application)
+  et Alegreya Sans, via Google Fonts.
+  À relier : les boutons href="#contact" pointent vers la page ou le formulaire de contact du site.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=MedievalSharp&display=swap" rel="stylesheet">
+<style>
+.zj{
+  --zj-night:#0b1626; --zj-ink:#16324f; --zj-deep:#0d1f33;
+  --zj-gold:#f5c04e; --zj-gold-dark:#b8860b; --zj-gold-deep:#6b4a00;
+  --zj-cream:#ffe9b0; --zj-parch:#f7f3e8; --zj-parch-ink:#37517a;
+  --zj-text:#cfdcea; --zj-muted:#9db0c6; --zj-teal:#1abc9c;
+  --zj-hand:'MedievalSharp','Luminari','Lucida Calligraphy',Georgia,serif;
+  --zj-body:'Alegreya Sans','Trebuchet MS','Segoe UI',sans-serif;
+  font-family:var(--zj-body); font-size:1.125rem; line-height:1.6; color:var(--zj-text);
+  background:var(--zj-night); -webkit-font-smoothing:antialiased;
+}
+.zj *,.zj *::before,.zj *::after{ box-sizing:border-box; }
+.zj :where(h1,h2,h3,p,ul,ol,li,figure,blockquote){ margin:0; padding:0; }
+.zj :where(ul,ol){ list-style:none; }
+.zj a:not(.zj-btn){ color:inherit; }
+.zj a:focus-visible{ outline:3px solid var(--zj-gold); outline-offset:4px; border-radius:12px; }
+.zj-wrap{ width:min(1120px, 100% - 2.5rem); margin-inline:auto; }
+.zj-sec{ padding:clamp(4rem, 9vw, 7rem) 0; }
+.zj-sec--deep{ background:linear-gradient(180deg, var(--zj-ink), var(--zj-deep)); }
+.zj-h2{ font-family:var(--zj-hand); font-weight:400; color:var(--zj-cream);
+  font-size:clamp(1.9rem, 4.2vw, 2.75rem); line-height:1.15; margin-bottom:1rem; max-width:30ch; text-wrap:balance; }
+.zj-lead{ max-width:60ch; color:var(--zj-text); font-size:1.2rem; }
+.zj-orn{ display:block; color:var(--zj-gold); font-size:1rem; margin-bottom:1.1rem; opacity:.85; }
+
+/* Boutons : ceux de l'application */
+.zj-btn{ display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:.8rem 1.9rem;
+  border-radius:12px; font-family:var(--zj-body); font-weight:700; font-size:1.08rem; text-decoration:none;
+  box-shadow:0 4px 10px rgba(0,0,0,.4); transition:transform .15s, filter .15s; }
+.zj-btn:hover{ filter:brightness(1.07); transform:translateY(-1px); }
+.zj-btn:active{ transform:translateY(1px); }
+.zj-btn--gold{ background:linear-gradient(180deg,#ffe08a,#f0b429 55%,#c98a12); color:#4a2c00;
+  text-shadow:0 1px 0 #ffe9b0; border:2px solid #8a5b00; }
+.zj-btn--blue{ background:linear-gradient(180deg,#41729f,#27496f); color:#eaf3ff; border:2px solid #8fb3dc; }
+
+/* ---------- Ouverture ---------- */
+.zj-hero{ position:relative; overflow:hidden; padding:clamp(3rem, 7vw, 5.5rem) 0 clamp(1rem, 3vw, 2rem);
+  background:radial-gradient(ellipse at 70% 35%, rgba(40,70,120,.35), rgba(4,10,22,.0) 60%), var(--zj-night); }
+.zj-hero-grid{ display:grid; grid-template-columns:1fr; gap:2.75rem; align-items:center; }
+.zj-hero-grid{ position:relative; z-index:0; }
+.zj-lockup{ display:flex; align-items:center; gap:clamp(.9rem, 2.2vw, 1.5rem); }
+.zj-emblem{ position:relative; flex:none; width:clamp(78px, 17vw, 136px); aspect-ratio:1; }
+.zj-logo{ position:relative; display:block; width:100%; height:100%;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.6)) drop-shadow(0 0 26px rgba(245,192,78,.3)); }
+.zj-orbits{ position:absolute; left:50%; top:50%; width:1500px; height:1500px; transform:translate(-50%,-50%);
+  z-index:-1; pointer-events:none; }
+.zj-mark{ display:block; font-family:var(--zj-hand); font-weight:400; color:var(--zj-gold);
+  font-size:clamp(3.6rem, 13vw, 7rem); line-height:.95; letter-spacing:.12em;
+  text-shadow:0 2px 0 #7a4d00, 0 8px 22px rgba(0,0,0,.8), 0 0 30px rgba(245,192,78,.45); }
+.zj-say{ display:block; margin-top:.6rem; font-size:.98rem; color:var(--zj-muted); font-style:italic; }
+.zj-tag{ display:block; margin-top:1.6rem; font-family:var(--zj-hand); font-weight:400; color:var(--zj-cream);
+  font-size:clamp(1.6rem, 3.6vw, 2.35rem); line-height:1.2; max-width:20ch; text-wrap:balance; }
+.zj-hero-text p{ margin-top:1.25rem; max-width:44ch; font-size:1.2rem; }
+.zj-cta{ display:flex; flex-wrap:wrap; gap:.9rem; margin-top:2rem; }
+.zj-frame{ position:relative; padding:11px; border-radius:16px; max-width:560px; margin-inline:auto; width:100%;
+  background:linear-gradient(135deg,#6b4a00 0%,#c98a12 18%,#ffe9a8 34%,#d9a232 50%,#8a5b00 66%,#f5c04e 82%,#6b4a00 100%);
+  box-shadow:0 22px 60px rgba(0,0,0,.65), 0 0 50px rgba(245,192,78,.14); }
+.zj-frame::before{ content:""; position:absolute; inset:5px; border-radius:12px; border:1px solid rgba(74,44,0,.55); pointer-events:none; }
+.zj-board{ display:block; width:100%; height:auto; border-radius:7px; box-shadow:inset 0 0 0 2px #3a2a12; background:#f1e6c8; }
+.zj-hero-note{ margin-top:1rem; text-align:center; font-size:.95rem; color:var(--zj-muted); }
+
+/* ---------- Vos attentes ---------- */
+.zj-needs{ margin-top:2.75rem; background:var(--zj-parch); border:3px solid var(--zj-gold-dark); border-radius:18px;
+  box-shadow:0 14px 40px rgba(0,0,0,.5); padding:.5rem clamp(1.25rem, 4vw, 3rem); color:var(--zj-parch-ink); }
+.zj-need{ display:grid; grid-template-columns:1fr; gap:.4rem 3rem; padding:1.7rem 0; border-top:1px solid #dccb9d; }
+.zj-need:first-child{ border-top:0; }
+.zj-need h3{ font-family:var(--zj-hand); font-weight:400; color:var(--zj-gold-deep); font-size:1.4rem; line-height:1.25; }
+.zj-need p{ font-size:1.12rem; max-width:58ch; }
+
+/* ---------- Apprendre ---------- */
+.zj-skills{ display:grid; grid-template-columns:1fr; gap:2.25rem 3rem; margin-top:3rem; }
+.zj-skill{ display:grid; grid-template-columns:52px 1fr; gap:1.1rem; align-items:start; }
+.zj-die{ width:52px; height:52px; }
+.zj-skill h3{ font-family:var(--zj-hand); font-weight:400; color:var(--zj-cream); font-size:1.35rem; line-height:1.2; margin-bottom:.3rem; }
+.zj-skill p{ font-size:1.06rem; }
+.zj-age{ margin-top:3.25rem; padding-top:1.75rem; border-top:1px solid rgba(245,192,78,.3); max-width:62ch; font-size:1.15rem; color:var(--zj-cream); }
+
+/* ---------- Une partie ---------- */
+.zj-steps{ position:relative; margin-top:3rem; display:grid; gap:2rem; counter-reset:zjstep; }
+.zj-steps::before{ content:""; position:absolute; left:23px; top:20px; bottom:20px; border-left:4px dotted rgba(245,192,78,.45); }
+.zj-step{ position:relative; display:grid; grid-template-columns:50px 1fr; gap:1.1rem; align-items:start; align-content:start; }
+.zj-ring{ width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:1.2rem; color:var(--zj-cream); border:3px solid var(--zj-gold);
+  background:radial-gradient(circle at 50% 38%, rgba(30,48,76,1), rgba(10,18,30,1)); box-shadow:0 0 16px rgba(0,0,0,.65); }
+.zj-step h3{ font-family:var(--zj-hand); font-weight:400; color:var(--zj-cream); font-size:1.3rem; line-height:1.2; margin:.55rem 0 .3rem; }
+.zj-step p{ font-size:1.04rem; }
+
+/* ---------- Origine ---------- */
+.zj-story{ max-width:640px; margin:2.5rem auto 0; text-align:center; background:rgba(28,20,8,.42);
+  border:1px solid #7d9b8f; border-radius:14px; box-shadow:0 0 0 4px rgba(18,13,6,.4), inset 0 0 18px rgba(0,0,0,.45);
+  padding:clamp(1.75rem, 4vw, 2.5rem); }
+.zj-story blockquote{ font-family:var(--zj-hand); color:#e8c98d; font-size:clamp(1.15rem, 2.4vw, 1.35rem); line-height:1.6; }
+.zj-sep{ display:flex; align-items:center; gap:.8rem; margin:1.4rem auto; max-width:240px; color:var(--zj-gold); }
+.zj-sep::before,.zj-sep::after{ content:""; flex:1; border-top:1px solid rgba(232,201,141,.45); }
+.zj-story .zj-who{ font-family:var(--zj-hand); color:var(--zj-cream); font-size:1.2rem; }
+.zj-story .zj-role{ margin-top:.35rem; font-size:1rem; color:#c9b88f; }
+.zj-center{ text-align:center; margin-inline:auto; }
+
+/* ---------- Obtenir ---------- */
+.zj-get{ display:grid; grid-template-columns:1fr; gap:2.5rem; align-items:center; }
+.zj-facts li{ position:relative; padding:.85rem 0 .85rem 2rem; border-bottom:1px solid rgba(245,192,78,.22); font-size:1.08rem; }
+.zj-facts li::before{ content:"✦"; position:absolute; left:0; top:.85rem; color:var(--zj-gold); }
+.zj-foot{ padding:2rem 0 2.5rem; border-top:1px solid rgba(245,192,78,.2); font-size:.95rem; color:var(--zj-muted); }
+
+@media (min-width:640px){
+  .zj-skills{ grid-template-columns:repeat(2, 1fr); }
+}
+@media (min-width:900px){
+  .zj-hero-grid{ grid-template-columns:1.05fr 1fr; gap:3.5rem; }
+  .zj-need{ grid-template-columns:minmax(0, 20rem) 1fr; align-items:baseline; }
+  .zj-skills{ grid-template-columns:repeat(3, 1fr); }
+  .zj-steps{ grid-template-columns:repeat(4, 1fr); gap:1.5rem; }
+  .zj-steps::before{ left:25px; right:calc(25% - 25px); top:23px; bottom:auto; border-left:0; border-top:4px dotted rgba(245,192,78,.45); }
+  .zj-step{ grid-template-columns:1fr; gap:.4rem; }
+  .zj-get{ grid-template-columns:1fr 1fr; gap:4rem; }
+}
+@media (prefers-reduced-motion:reduce){
+  .zj-btn{ transition:none; }
+}
+</style>
+</head>
+<body style="margin:0;background:#0b1626;">
+<div class="zj">
+
+  <!-- ===== Ouverture ===== -->
+  <header class="zj-hero">
+    <div class="zj-wrap zj-hero-grid">
+      <div class="zj-hero-text">
+        <h1>
+          <span class="zj-lockup">
+            <span class="zj-emblem" aria-hidden="true"><svg class="zj-orbits" viewBox="0 0 1500 1500" focusable="false"><defs><radialGradient id="zjoGlow"><stop offset="0" stop-color="#f5c04e" stop-opacity=".22"/><stop offset="1" stop-color="#f5c04e" stop-opacity="0"/></radialGradient></defs><circle cx="750" cy="750" r="300" fill="url(#zjoGlow)"/><g fill="none" stroke="#f5c04e" stroke-width="2" stroke-linecap="round"><circle cx="750" cy="750" r="96" stroke-opacity="0.38" stroke-dasharray=".01 13.113"/><circle cx="750" cy="750" r="150" stroke-opacity="0.26" stroke-dasharray=".01 13.090"/><circle cx="750" cy="750" r="220" stroke-opacity="0.19" stroke-dasharray=".01 13.041"/><circle cx="750" cy="750" r="310" stroke-opacity="0.14" stroke-dasharray=".01 12.985"/><circle cx="750" cy="750" r="420" stroke-opacity="0.12" stroke-dasharray=".01 13.000"/><circle cx="750" cy="750" r="550" stroke-opacity="0.09" stroke-dasharray=".01 12.992"/><circle cx="750" cy="750" r="700" stroke-opacity="0.065" stroke-dasharray=".01 13.013"/></g></svg>
+              <svg class="zj-logo" viewBox="0 0 200 200" focusable="false">
+  <defs>
+    <linearGradient id="zjlRim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8a5b00"/><stop offset=".2" stop-color="#d9a232"/>
+      <stop offset=".36" stop-color="#ffeaa8"/><stop offset=".52" stop-color="#e0a93a"/>
+      <stop offset=".7" stop-color="#9a6a08"/><stop offset=".86" stop-color="#f5c04e"/>
+      <stop offset="1" stop-color="#7a4d00"/>
+    </linearGradient>
+    <radialGradient id="zjlDisc" cx=".5" cy=".4" r=".62">
+      <stop offset="0" stop-color="#2d4b72"/><stop offset=".62" stop-color="#1d3049"/><stop offset="1" stop-color="#101d30"/>
+    </radialGradient>
+    <radialGradient id="zjlLight" gradientUnits="userSpaceOnUse" cx="104" cy="100" r="62">
+      <stop offset="0" stop-color="#fff3c4" stop-opacity=".95"/><stop offset=".55" stop-color="#ffe08a" stop-opacity=".35"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- pièce : bord doré, grènetis, disque bleu nuit -->
+  <circle cx="100" cy="100" r="95" fill="url(#zjlRim)" stroke="#4a2c00" stroke-width="2"/>
+  <g fill="#fff4cc" stroke="#8a5b00" stroke-width=".6"><circle cx="187.50" cy="100.00" r="2.1"/><circle cx="186.17" cy="115.19" r="2.1"/><circle cx="182.22" cy="129.93" r="2.1"/><circle cx="175.78" cy="143.75" r="2.1"/><circle cx="167.03" cy="156.24" r="2.1"/><circle cx="156.24" cy="167.03" r="2.1"/><circle cx="143.75" cy="175.78" r="2.1"/><circle cx="129.93" cy="182.22" r="2.1"/><circle cx="115.19" cy="186.17" r="2.1"/><circle cx="100.00" cy="187.50" r="2.1"/><circle cx="84.81" cy="186.17" r="2.1"/><circle cx="70.07" cy="182.22" r="2.1"/><circle cx="56.25" cy="175.78" r="2.1"/><circle cx="43.76" cy="167.03" r="2.1"/><circle cx="32.97" cy="156.24" r="2.1"/><circle cx="24.22" cy="143.75" r="2.1"/><circle cx="17.78" cy="129.93" r="2.1"/><circle cx="13.83" cy="115.19" r="2.1"/><circle cx="12.50" cy="100.00" r="2.1"/><circle cx="13.83" cy="84.81" r="2.1"/><circle cx="17.78" cy="70.07" r="2.1"/><circle cx="24.22" cy="56.25" r="2.1"/><circle cx="32.97" cy="43.76" r="2.1"/><circle cx="43.76" cy="32.97" r="2.1"/><circle cx="56.25" cy="24.22" r="2.1"/><circle cx="70.07" cy="17.78" r="2.1"/><circle cx="84.81" cy="13.83" r="2.1"/><circle cx="100.00" cy="12.50" r="2.1"/><circle cx="115.19" cy="13.83" r="2.1"/><circle cx="129.93" cy="17.78" r="2.1"/><circle cx="143.75" cy="24.22" r="2.1"/><circle cx="156.24" cy="32.97" r="2.1"/><circle cx="167.03" cy="43.76" r="2.1"/><circle cx="175.78" cy="56.25" r="2.1"/><circle cx="182.22" cy="70.07" r="2.1"/><circle cx="186.17" cy="84.81" r="2.1"/></g>
+  <circle cx="100" cy="100" r="80.5" fill="none" stroke="#4a2c00" stroke-width="2.5" opacity=".65"/>
+  <circle cx="100" cy="100" r="79" fill="url(#zjlDisc)"/>
+  <!-- route en pointillés et anneau de carrefour -->
+  <circle cx="100" cy="100" r="68" fill="none" stroke="#f5c04e" stroke-width="3" stroke-linecap="round" stroke-dasharray=".01 10.68" opacity=".55"/>
+  <path d="M147 44 Q148.6 52.4 157 54 Q148.6 55.6 147 64 Q145.4 55.6 137 54 Q145.4 52.4 147 44 Z" fill="#fff3c4"/>
+  <!-- rayons -->
+  <path d="M104 100 L58 52 L70 44 Z M104 100 L84 34 L98 32 Z M104 100 L112 32 L126 34 Z M104 100 L140 42 L151 51 Z" fill="url(#zjlLight)"/>
+  <!-- personnage : le magicien bleu qui court -->
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="112" cy="146" rx="28" ry="4" fill="#000" opacity=".35" stroke="none"/>
+    <!-- traits de vitesse -->
+    <g stroke="#f5c04e" stroke-width="2.4" opacity=".75" fill="none"><path d="M64 88 H78"/><path d="M58 97 H80"/><path d="M63 106 H76"/></g>
+    <!-- bras arrière -->
+    <path d="M110 97 Q103 103 98 108" fill="none" stroke="#2e5a96" stroke-width="7"/>
+    <circle cx="96" cy="109.5" r="3.4" fill="#f3c79c" stroke="#8a5a3c" stroke-width=".8"/>
+    <!-- jambe arrière -->
+    <path d="M101 122 Q95 127 90 124" fill="none" stroke="#243b5a" stroke-width="5.5"/>
+    <path d="M86 118.5 Q92 119 93 124 Q88 128 83 126 Q81 121 86 118.5 Z" fill="#7a4a1e" stroke="#3a1f06" stroke-width="1"/>
+    <!-- jambe avant -->
+    <path d="M121 123 L127 137" fill="none" stroke="#243b5a" stroke-width="5.5"/>
+    <path d="M123 135 Q131 135 137 139 Q139 144 134 144 L125 144 Q122 140 123 135 Z" fill="#7a4a1e" stroke="#3a1f06" stroke-width="1"/>
+    <!-- robe -->
+    <path d="M108 92 Q116 88.5 124 92.5 L132 123 Q121 129.5 109 126.5 Q98 130.5 87 123.5 Q99 111 108 92 Z" fill="#4a86d0" stroke="#1d3049" stroke-width="1.6"/>
+    <path d="M108 92 Q116 88.5 124 92.5 L127 104 Q116 101 106 97 Z" fill="#6fa3e0" opacity=".55" stroke="none"/>
+    <path d="M132 123 Q121 129.5 109 126.5 Q98 130.5 87 123.5" fill="none" stroke="#f5c04e" stroke-width="2.6"/>
+    <path d="M104.5 104.5 L127.5 103" fill="none" stroke="#f5c04e" stroke-width="2.8"/>
+    <g fill="#ffe9b0" stroke="none"><path d="M103 114 l1.2 2.8 2.8 1.2 -2.8 1.2 -1.2 2.8 -1.2 -2.8 -2.8 -1.2 2.8 -1.2 Z"/><path d="M119 111 l1 2.2 2.2 1 -2.2 1 -1 2.2 -1 -2.2 -2.2 -1 2.2 -1 Z"/></g>
+    <!-- bâton -->
+    <path d="M128.5 128 L141 76" fill="none" stroke="#7a4a1e" stroke-width="3.2"/>
+    <circle cx="141.6" cy="73.5" r="9" fill="#ffe08a" opacity=".35" stroke="none"/>
+    <circle cx="141.6" cy="73.5" r="5" fill="#ffe08a" stroke="#b8860b" stroke-width="1"/>
+    <!-- bras avant -->
+    <path d="M120 96 Q128 99 133.5 102.5" fill="none" stroke="#4a86d0" stroke-width="7"/>
+    <circle cx="135.2" cy="103" r="3.6" fill="#f3c79c" stroke="#8a5a3c" stroke-width=".8"/>
+    <!-- tête -->
+    <path d="M103 72 Q101 80 106 86 L110 80 Z" fill="#8a5a2b" stroke="none"/>
+    <circle cx="116" cy="79" r="13.5" fill="#f3c79c" stroke="#8a5a3c" stroke-width="1"/>
+    <circle cx="129.4" cy="81" r="3.2" fill="#f3c79c" stroke="#8a5a3c" stroke-width="1"/>
+    <circle cx="116" cy="79" r="12.9" fill="#f3c79c" stroke="none"/>
+    <circle cx="128.9" cy="81" r="2.6" fill="#f3c79c" stroke="none"/>
+    <ellipse cx="122.3" cy="76.2" rx="2.1" ry="2.7" fill="#1d3049" stroke="none"/>
+    <circle cx="123" cy="75.1" r=".8" fill="#fff" stroke="none"/>
+    <path d="M119.8 71.6 Q122.5 70 125.2 71.8" fill="none" stroke="#6b3f18" stroke-width="1.2"/>
+    <circle cx="119.6" cy="84" r="2.9" fill="#f08c8c" opacity=".55" stroke="none"/>
+    <path d="M127.6 85.2 Q125.8 90.6 120.4 86.6 Q124.2 87.4 127.6 85.2 Z" fill="#7a2a1a" stroke="#7a2a1a" stroke-width=".9"/>
+    <path d="M125.9 87.6 Q124 89.4 121.9 88" fill="none" stroke="#e8667a" stroke-width="1.3"/>
+    <path d="M120.4 86.6 Q119.2 85.8 118.9 84.4" fill="none" stroke="#8a5a3c" stroke-width=".9"/>
+    <!-- chapeau pointu, pointe rabattue par la course -->
+    <path d="M100.5 67.5 L127.5 63.5 C119 55.5 109 46 97 40.5 C91 37.5 85 36.5 80.5 39 C86 41 91.5 45.5 95.5 51.5 C99.5 57.5 101 62.5 100.5 67.5 Z" fill="#3d6fb4" stroke="#1d3049" stroke-width="1.6"/>
+    <path d="M100.8 64.8 L126 61 L127.8 63.8 L100.6 67.8 Z" fill="#f5c04e" stroke="none"/>
+    <path d="M110 51 l1.1 2.5 2.5 1.1 -2.5 1.1 -1.1 2.5 -1.1 -2.5 -2.5 -1.1 2.5 -1.1 Z" fill="#ffe9b0" stroke="none"/>
+    <ellipse cx="114" cy="66.5" rx="19.5" ry="4.2" transform="rotate(-8 114 66.5)" fill="#2e5a96" stroke="#1d3049" stroke-width="1.4"/>
+  </g>
+  <!-- dé -->
+  <g transform="translate(63 130) rotate(-14)">
+    <rect x="-17" y="-17" width="34" height="34" rx="7" fill="#fdf6e3" stroke="#0b1626" stroke-width="2.4"/>
+    <g fill="#1d3049"><circle cx="-8" cy="-8" r="3.4"/><circle cx="0" cy="0" r="3.4"/><circle cx="8" cy="8" r="3.4"/></g>
+  </g>
+</svg>
+            </span>
+            <span class="zj-mark">ZIJIN</span>
+          </span>
+          <span class="zj-say">se prononce « Dzedjin »</span>
+          <span class="zj-tag">Le jeu de plateau qui fait grandir, à portée de doigt.</span>
+        </h1>
+        <p>Une course au trésor illustrée, à jouer en famille. L'enfant compte, anticipe et décide, sans s'en apercevoir.</p>
+        <div class="zj-cta">
+          <a class="zj-btn zj-btn--gold" href="#contact">Obtenir Zijin</a>
+          <a class="zj-btn zj-btn--blue" href="#zj-apprendre">Ce que l'enfant apprend</a>
+        </div>
+      </div>
+
+      <figure>
+        <div class="zj-frame">
+          <svg class="zj-board" id="zj-board" viewBox="0 0 400 300" role="img" aria-labelledby="zj-board-t">
+            <title id="zj-board-t">Un pion avance sur les routes du plateau, choisit sa route à un carrefour et atteint le trésor de la Grande Ville.</title>
+            <defs>
+              <radialGradient id="zjVig" cx="50%" cy="50%" r="70%">
+                <stop offset="60%" stop-color="#6b4a00" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#6b4a00" stop-opacity=".28"/>
+              </radialGradient>
+              <radialGradient id="zjGlow">
+                <stop offset="0%" stop-color="#ffd76b" stop-opacity=".95"/>
+                <stop offset="100%" stop-color="#ffd76b" stop-opacity="0"/>
+              </radialGradient>
+              <g id="zjChest">
+                <rect x="-9" y="-3" width="18" height="11" rx="1.5" fill="#c98a12" stroke="#5a3714" stroke-width="1.4"/>
+                <path d="M-9 -3 Q0 -12 9 -3 Z" fill="#e0a53a" stroke="#5a3714" stroke-width="1.4" stroke-linejoin="round"/>
+                <rect x="-2" y="-1" width="4" height="5" rx="1" fill="#ffe08a" stroke="#5a3714" stroke-width=".9"/>
+              </g>
+            </defs>
+
+            <rect width="400" height="300" fill="#f1e6c8"/>
+            <rect width="400" height="300" fill="url(#zjVig)"/>
+
+            <!-- rivière -->
+            <path d="M-10 122 C 70 152, 150 94, 232 122 S 360 152, 410 130" fill="none" stroke="#7fa7cb" stroke-width="10" stroke-linecap="round" opacity=".6"/>
+            <path d="M-10 122 C 70 152, 150 94, 232 122 S 360 152, 410 130" fill="none" stroke="#c4dbee" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+
+            <!-- décors des trois destinations : colline, col, grande ville -->
+            <g fill="none" stroke="#37517a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity=".75">
+              <path d="M52 66 Q84 22 118 66" fill="#dfd3a8"/>
+              <path d="M186 58 L206 22 L222 44 L234 30 L258 58" fill="#e4dac0"/>
+              <path d="M206 22 L201 31 M234 30 L230 37"/>
+              <path d="M330 92 V70 H342 V92 M344 92 V60 H356 V92 M358 92 V74 H370 V92" fill="#e4dac0"/>
+            </g>
+            <!-- quelques arbres -->
+            <g fill="#8fa77a" stroke="#4f6a45" stroke-width="1">
+              <circle cx="300" cy="232" r="7"/><circle cx="314" cy="240" r="6"/><circle cx="118" cy="252" r="6"/>
+              <circle cx="190" cy="252" r="5"/><circle cx="352" cy="200" r="6"/><circle cx="30" cy="190" r="6"/>
+            </g>
+
+            <!-- routes -->
+            <g fill="none" stroke-linecap="round">
+              <g stroke="#8a6a3a" stroke-width="11">
+                <path id="zjMain" d="M40 262 C90 252 112 212 150 200 C182 190 210 188 242 168 C282 172 318 148 350 108"/>
+                <path d="M150 200 C122 160 92 122 84 70"/>
+                <path d="M242 168 C252 132 232 100 222 58"/>
+              </g>
+              <g stroke="#ecdcad" stroke-width="7.5">
+                <path d="M40 262 C90 252 112 212 150 200 C182 190 210 188 242 168 C282 172 318 148 350 108"/>
+                <path d="M150 200 C122 160 92 122 84 70"/>
+                <path d="M242 168 C252 132 232 100 222 58"/>
+              </g>
+              <g stroke="#9c7a44" stroke-width="2.6" stroke-dasharray=".01 11">
+                <path d="M40 262 C90 252 112 212 150 200 C182 190 210 188 242 168 C282 172 318 148 350 108"/>
+                <path d="M150 200 C122 160 92 122 84 70"/>
+                <path d="M242 168 C252 132 232 100 222 58"/>
+              </g>
+            </g>
+
+            <!-- départ et carrefours -->
+            <circle cx="40" cy="262" r="7" fill="#f7f3e8" stroke="#37517a" stroke-width="2"/>
+            <circle cx="150" cy="200" r="4.5" fill="#f5c04e" stroke="#6b4a00" stroke-width="1.4"/>
+            <circle cx="242" cy="168" r="4.5" fill="#f5c04e" stroke="#6b4a00" stroke-width="1.4"/>
+
+            <!-- trésors -->
+            <circle cx="84" cy="62" r="20" fill="url(#zjGlow)" opacity=".35"/>
+            <circle cx="222" cy="50" r="20" fill="url(#zjGlow)" opacity=".35"/>
+            <circle cx="350" cy="102" r="30" fill="url(#zjGlow)" opacity=".35" class="zj-anim">
+              <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+                values=".35;.35;1;1;.35;.35" keyTimes="0;0.73;0.76;0.93;0.97;1"/>
+            </circle>
+            <use href="#zjChest" x="84" y="64"/>
+            <use href="#zjChest" x="222" y="52"/>
+            <use href="#zjChest" x="350" y="104"/>
+
+            <!-- anneaux dorés du carrefour : les deux routes possibles -->
+            <g fill="none" stroke="#f5c04e" stroke-width="2.6" opacity="0">
+              <circle cx="244" cy="138" r="7"/>
+              <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+                values="0;0;1;1;0;0" keyTimes="0;0.31;0.33;0.47;0.5;1"/>
+            </g>
+            <g fill="none" stroke="#f5c04e" stroke-width="2.6" opacity="0">
+              <circle cx="266" cy="167" r="7">
+                <animate attributeName="r" dur="10s" repeatCount="indefinite"
+                  values="7;7;9.5;7;7" keyTimes="0;0.46;0.485;0.51;1"/>
+              </circle>
+              <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+                values="0;0;1;1;0;0" keyTimes="0;0.31;0.33;0.51;0.53;1"/>
+            </g>
+
+            <!-- le pion -->
+            <g>
+              <animateMotion dur="10s" repeatCount="indefinite" calcMode="linear"
+                keyPoints="0;0;0.636;0.636;1;1;0;0" keyTimes="0;0.06;0.30;0.52;0.74;0.97;0.971;1">
+                <mpath href="#zjMain"/>
+              </animateMotion>
+              <animate attributeName="opacity" dur="10s" repeatCount="indefinite"
+                values="1;1;0;0;1" keyTimes="0;0.94;0.965;0.985;1"/>
+              <ellipse cx="0" cy="3" rx="7" ry="2.6" fill="#3a2a12" opacity=".35"/>
+              <g>
+                <animateTransform attributeName="transform" type="translate" dur="10s" repeatCount="indefinite"
+                  keyTimes="0;0.06;0.0733;0.0867;0.1;0.1133;0.1267;0.14;0.1533;0.1667;0.18;0.1933;0.2067;0.22;0.2333;0.2467;0.26;0.2733;0.2867;0.3;0.52;0.5338;0.5475;0.5613;0.575;0.5887;0.6025;0.6162;0.63;0.6438;0.6575;0.6713;0.685;0.6987;0.7125;0.7263;0.74;1" values="0 0;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 -5;0 0;0 0"/>
+                <circle cx="0" cy="-5" r="7" fill="#1abc9c" stroke="#0b1626" stroke-width="1.6"/>
+                <circle cx="-2.2" cy="-7.4" r="2.2" fill="#fff" opacity=".6"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption class="zj-hero-note">À chaque carrefour, des anneaux dorés s'allument : on touche sa route.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <!-- ===== Vos attentes ===== -->
+  <section class="zj-sec" aria-labelledby="zj-t-needs">
+    <div class="zj-wrap">
+      <h2 class="zj-h2" id="zj-t-needs">Ce que vous attendez d'un jeu sur écran</h2>
+      <p class="zj-lead">Pensé pour les parents, et pour tous ceux qui accompagnent les enfants.</p>
+      <div class="zj-needs">
+        <div class="zj-need">
+          <h3>Un écran qui fait réfléchir</h3>
+          <p>C'est l'enfant qui joue : il lance le dé, choisit sa route et voit le fruit de ses choix.</p>
+        </div>
+        <div class="zj-need">
+          <h3>Un moment partagé</h3>
+          <p>Deux ou trois joueurs sur le même écran, comme autour d'une table.</p>
+        </div>
+        <div class="zj-need">
+          <h3>De l'autonomie</h3>
+          <p>Seul, il affronte l'ordinateur, qui joue à un rythme naturel.</p>
+        </div>
+        <div class="zj-need">
+          <h3>La tranquillité d'esprit</h3>
+          <p>Aucune publicité, aucun compte, aucune connexion. Rien ne quitte l'appareil.</p>
+        </div>
+        <div class="zj-need">
+          <h3>Un jeu qui se renouvelle</h3>
+          <p>Des héros aux pouvoirs variés, des duels, et d'autres mondes en préparation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Apprendre ===== -->
+  <section class="zj-sec zj-sec--deep" id="zj-apprendre" aria-labelledby="zj-t-learn">
+    <div class="zj-wrap">
+      <h2 class="zj-h2" id="zj-t-learn">Ce que l'enfant apprend en jouant</h2>
+      <p class="zj-lead">Conçu par un ingénieur en pédagogie numérique : chaque règle fait travailler une compétence, sans ressembler à un exercice.</p>
+      <ul class="zj-skills">
+        <li class="zj-skill"><svg class="zj-die" viewBox="0 0 52 52" aria-hidden="true"><rect x="2" y="2" width="48" height="48" rx="11" fill="#0a121e" stroke="#f5c04e" stroke-width="2.5"/><g fill="#ffe9b0"><circle cx="26" cy="26" r="4.2"/></g></svg><div><h3>Compter</h3><p>Lire le dé, avancer case par case.</p></div></li>
+        <li class="zj-skill"><svg class="zj-die" viewBox="0 0 52 52" aria-hidden="true"><rect x="2" y="2" width="48" height="48" rx="11" fill="#0a121e" stroke="#f5c04e" stroke-width="2.5"/><g fill="#ffe9b0"><circle cx="15" cy="15" r="4.2"/><circle cx="37" cy="37" r="4.2"/></g></svg><div><h3>Anticiper</h3><p>Repérer la route la plus courte.</p></div></li>
+        <li class="zj-skill"><svg class="zj-die" viewBox="0 0 52 52" aria-hidden="true"><rect x="2" y="2" width="48" height="48" rx="11" fill="#0a121e" stroke="#f5c04e" stroke-width="2.5"/><g fill="#ffe9b0"><circle cx="15" cy="15" r="4.2"/><circle cx="26" cy="26" r="4.2"/><circle cx="37" cy="37" r="4.2"/></g></svg><div><h3>Décider</h3><p>Choisir sa route à chaque carrefour.</p></div></li>
+        <li class="zj-skill"><svg class="zj-die" viewBox="0 0 52 52" aria-hidden="true"><rect x="2" y="2" width="48" height="48" rx="11" fill="#0a121e" stroke="#f5c04e" stroke-width="2.5"/><g fill="#ffe9b0"><circle cx="15" cy="15" r="4.2"/><circle cx="37" cy="15" r="4.2"/><circle cx="15" cy="37" r="4.2"/><circle cx="37" cy="37" r="4.2"/></g></svg><div><h3>Gérer</h3><p>Acheter, encaisser, garder de quoi rebondir.</p></div></li>
+        <li class="zj-skill"><svg class="zj-die" viewBox="0 0 52 52" aria-hidden="true"><rect x="2" y="2" width="48" height="48" rx="11" fill="#0a121e" stroke="#f5c04e" stroke-width="2.5"/><g fill="#ffe9b0"><circle cx="15" cy="15" r="4.2"/><circle cx="37" cy="15" r="4.2"/><circle cx="26" cy="26" r="4.2"/><circle cx="15" cy="37" r="4.2"/><circle cx="37" cy="37" r="4.2"/></g></svg><div><h3>Comprendre une règle</h3><p>Un toucher sur « ? » explique chaque écran.</p></div></li>
+        <li class="zj-skill"><svg class="zj-die" viewBox="0 0 52 52" aria-hidden="true"><rect x="2" y="2" width="48" height="48" rx="11" fill="#0a121e" stroke="#f5c04e" stroke-width="2.5"/><g fill="#ffe9b0"><circle cx="15" cy="15" r="4.2"/><circle cx="15" cy="26" r="4.2"/><circle cx="15" cy="37" r="4.2"/><circle cx="37" cy="15" r="4.2"/><circle cx="37" cy="26" r="4.2"/><circle cx="37" cy="37" r="4.2"/></g></svg><div><h3>Patienter</h3><p>Attendre son tour, accepter un revers.</p></div></li>
+      </ul>
+      <p class="zj-age">Dès 5 ans avec un adulte, puis seul contre l'ordinateur.</p>
+    </div>
+  </section>
+
+  <!-- ===== Une partie ===== -->
+  <section class="zj-sec" aria-labelledby="zj-t-game">
+    <div class="zj-wrap">
+      <h2 class="zj-h2" id="zj-t-game">Une partie en quatre gestes</h2>
+      <p class="zj-lead">Les règles se découvrent en jouant.</p>
+      <ol class="zj-steps">
+        <li class="zj-step"><span class="zj-ring" aria-hidden="true">1</span><div><h3>Choisir son héros</h3><p>Chacun a son pouvoir.</p></div></li>
+        <li class="zj-step"><span class="zj-ring" aria-hidden="true">2</span><div><h3>Lancer le dé</h3><p>Et choisir sa route aux carrefours.</p></div></li>
+        <li class="zj-step"><span class="zj-ring" aria-hidden="true">3</span><div><h3>Bâtir et défier</h3><p>Acheter, encaisser, se mesurer en duel.</p></div></li>
+        <li class="zj-step"><span class="zj-ring" aria-hidden="true">4</span><div><h3>Ouvrir le trésor</h3><p>Le premier arrivé découvre son cadeau.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Origine ===== -->
+  <section class="zj-sec zj-sec--deep" aria-labelledby="zj-t-story">
+    <div class="zj-wrap">
+      <h2 class="zj-h2 zj-center" id="zj-t-story" style="text-align:center">Né sur un tapis de jeu</h2>
+      <div class="zj-story">
+        <blockquote>« Copie virtuelle fidèle du véritable jeu de plateau inventé et joué par Nathan et son papa Alban. Le nom du jeu, Zijin, est aussi le second prénom, d'origine chinoise, de Nathan. »</blockquote>
+        <div class="zj-sep" aria-hidden="true">✦</div>
+        <p class="zj-who">Alban Aguilon</p>
+        <p class="zj-role">Ingénieur en pédagogie numérique</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Obtenir ===== -->
+  <section class="zj-sec" aria-labelledby="zj-t-get">
+    <div class="zj-wrap zj-get">
+      <div>
+        <h2 class="zj-h2" id="zj-t-get">Obtenir Zijin</h2>
+        <p class="zj-lead">Sur smartphone Android ou tablette, sans installation.</p>
+        <div class="zj-cta">
+          <a class="zj-btn zj-btn--gold" href="#contact">Nous écrire</a>
+        </div>
+      </div>
+      <ul class="zj-facts">
+        <li>Deux ou trois joueurs, ou seul contre l'ordinateur</li>
+        <li>Aucune publicité, aucun achat intégré</li>
+        <li>Aucun compte, aucune connexion</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="zj-foot">
+    <div class="zj-wrap">Zijin est une création d'Alban Aguilon, AA Digital Learning Systems. © 2026.</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var svg=document.getElementById('zj-board');
+  if(!svg||!window.matchMedia) return;
+  var mq=window.matchMedia('(prefers-reduced-motion: reduce)');
+  function apply(){ try{ if(mq.matches){ svg.pauseAnimations(); svg.setCurrentTime(4.2); } else { svg.unpauseAnimations(); } }catch(e){} }
+  apply(); if(mq.addEventListener) mq.addEventListener('change',apply);
+})();
+</script>
+</body>
+</html>
