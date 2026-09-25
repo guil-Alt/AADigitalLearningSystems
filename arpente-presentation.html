@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arpente — L'exploration qui fait apprendre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBFAF6;
+    --ink:#193440;
+    --ink-soft:#4A6570;
+    --grid:#D3E3EB;
+    --gold:#E0972B;
+    --gold-deep:#B8760F;
+    --leaf:#3E7C59;
+    --leaf-soft:#EAF2EC;
+    --card:#FFFFFF;
+    --line:#E7E2D6;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#101C22;
+      --ink:#EAF1F2;
+      --ink-soft:#9DB3BB;
+      --grid:#20323A;
+      --gold:#E9AB48;
+      --gold-deep:#E9AB48;
+      --leaf:#63A67E;
+      --leaf-soft:#16281F;
+      --card:#16252B;
+      --line:#233840;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101C22;--ink:#EAF1F2;--ink-soft:#9DB3BB;--grid:#20323A;
+    --gold:#E9AB48;--gold-deep:#E9AB48;--leaf:#63A67E;--leaf-soft:#16281F;
+    --card:#16252B;--line:#233840;
+  }
+  *{box-sizing:border-box}
+  html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Figtree",system-ui,-apple-system,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size:28px 28px;
+    background-position:center top;
+  }
+  img{max-width:100%}
+  .wrap{max-width:960px;margin:0 auto;padding:0 22px}
+  .display{font-family:"Fraunces",Georgia,serif}
+
+  /* ---- top bar ---- */
+  header.top{padding:22px 0 0}
+  .brand{display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+  .brand .mark{
+    width:34px;height:34px;border-radius:9px;flex:0 0 auto;
+    background:radial-gradient(circle at 32% 30%, var(--gold) 0 42%, transparent 43%),
+               radial-gradient(circle at 70% 68%, var(--leaf) 0 34%, transparent 35%),
+               var(--ink);
+  }
+  .brand b{font-family:"Fraunces",serif;font-weight:600;font-size:1.05rem;letter-spacing:.2px}
+  .brand span{color:var(--ink-soft);font-size:.86rem}
+
+  /* ---- hero ---- */
+  .hero{padding:46px 0 40px}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--gold);color:#2A1B00;
+    font-weight:700;font-size:.8rem;letter-spacing:.3px;
+    padding:7px 14px;border-radius:100px;
+  }
+  .badge .dot{width:7px;height:7px;border-radius:50%;background:#2A1B00;
+    animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @media (prefers-reduced-motion: reduce){.badge .dot{animation:none}}
+  .hero h1{
+    font-family:"Fraunces",serif;font-weight:900;
+    font-size:clamp(2.5rem,8vw,4.4rem);line-height:1.02;
+    margin:20px 0 0;max-width:14ch;letter-spacing:-.5px;
+  }
+  .hero .lede{font-size:1.24rem;color:var(--ink-soft);margin:20px 0 0;max-width:56ch}
+  .hero .pub{
+    margin:26px 0 0;font-size:.98rem;color:var(--ink);
+    border-left:3px solid var(--leaf);padding:4px 0 4px 15px;max-width:58ch;
+  }
+  .reveal{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  .reveal.d1{animation-delay:.05s}
+  .reveal.d2{animation-delay:.18s}
+  .reveal.d3{animation-delay:.30s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){.reveal{opacity:1;transform:none;animation:none}}
+
+  /* ---- sections ---- */
+  section{padding:52px 0}
+  .eyebrow{color:var(--gold-deep);font-weight:700;font-size:.9rem;margin:0}
+  h2{font-family:"Fraunces",serif;font-weight:600;font-size:clamp(1.7rem,5vw,2.5rem);
+    line-height:1.1;margin:8px 0 14px;letter-spacing:-.3px}
+  .intro{color:var(--ink-soft);font-size:1.1rem;max-width:60ch;margin:0 0 30px}
+
+  /* discipline blocks */
+  .disc{border-top:1px solid var(--line)}
+  .disc .row{
+    display:grid;grid-template-columns:150px 1fr;gap:24px;
+    padding:24px 0;border-bottom:1px solid var(--line);align-items:start;
+  }
+  .disc .tag{font-family:"Fraunces",serif;font-weight:600;font-size:1.02rem;color:var(--leaf);
+    display:flex;gap:10px;align-items:baseline}
+  .disc .tag em{font-family:"Figtree";font-style:normal;font-size:1.35rem}
+  .disc h3{margin:0 0 5px;font-size:1.12rem;font-weight:700}
+  .disc p{margin:0;color:var(--ink-soft)}
+  @media (max-width:640px){
+    .disc .row{grid-template-columns:1fr;gap:8px;padding:20px 0}
+  }
+
+  /* teacher panel */
+  .panel{background:var(--leaf-soft);border:1px solid var(--line);border-radius:18px;padding:30px 26px}
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px;margin-top:8px}
+  @media (max-width:640px){.feat{grid-template-columns:1fr}}
+  .feat h4{margin:0 0 4px;font-size:1.04rem;display:flex;gap:9px;align-items:baseline}
+  .feat h4 em{font-style:normal;font-size:1.2rem}
+  .feat p{margin:0;color:var(--ink-soft);font-size:.98rem}
+
+  /* trust row */
+  .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  @media (max-width:640px){.trust{grid-template-columns:1fr}}
+  .trust .t{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .trust .t b{display:block;font-family:"Fraunces",serif;font-size:1.05rem;margin-bottom:5px}
+  .trust .t span{color:var(--ink-soft);font-size:.95rem}
+
+  /* closing */
+  .close{text-align:center;padding:64px 0 24px}
+  .close h2{max-width:20ch;margin-inline:auto}
+  .close p{color:var(--ink-soft);font-size:1.15rem;max-width:52ch;margin:14px auto 0}
+
+  footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--ink-soft);font-size:.9rem}
+  footer .display{color:var(--ink);font-size:1rem}
+  footer a{color:var(--leaf);text-decoration:none}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap brand">
+    <span class="mark" aria-hidden="true"></span>
+    <b>Arpente</b>
+    <span>· une publication AA Digital Learning Systems</span>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="hero">
+    <span class="badge reveal d1"><span class="dot" aria-hidden="true"></span>Publication à venir</span>
+    <h1 class="reveal d1">L'exploration qui fait apprendre.</h1>
+    <p class="lede reveal d2">Arpente est un monde sans fin que l'enfant découvre pas à pas. Chaque territoire traversé devient une leçon vivante&nbsp;: géographie, sciences, mathématiques, histoire. On explore pour le plaisir&nbsp;; on apprend sans s'en rendre compte.</p>
+    <p class="pub reveal d3">Conçu et édité par <strong>AA Digital Learning Systems</strong>, spécialiste de l'édition de contenus pédagogiques numériques, pour l'école primaire — et bientôt le collège.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">Ce que l'enfant apprend en jouant</p>
+    <h2>Un programme scolaire déguisé en aventure</h2>
+    <p class="intro">Derrière chaque mécanique de jeu se cache une notion du programme des cycles 2 et 3. L'enfant ne révise pas&nbsp;: il explore, observe, résout — et progresse.</p>
+
+    <div class="disc">
+      <div class="row">
+        <div class="tag"><em>🗺️</em>Géographie</div>
+        <div><h3>Découvrir les milieux du monde</h3><p>Le monde s'organise en milieux naturels — désert, savane, forêt, toundra, banquise — qui ne se côtoient que s'ils sont voisins. L'enfant comprend, en marchant, pourquoi le désert et la glace ne se touchent jamais.</p></div>
+      </div>
+      <div class="row">
+        <div class="tag"><em>🧭</em>Se repérer</div>
+        <div><h3>Points cardinaux et orientation</h3><p>Les indices de route se donnent en «&nbsp;va vers le nord-est&nbsp;». Une manière naturelle d'apprendre à s'orienter dans l'espace et à lire une direction.</p></div>
+      </div>
+      <div class="row">
+        <div class="tag"><em>📐</em>Mathématiques</div>
+        <div><h3>Coordonnées, distances, échelle</h3><p>La carte est quadrillée. L'enfant relève des coordonnées, compare des distances et manipule sans le savoir échelle et proportionnalité.</p></div>
+      </div>
+      <div class="row">
+        <div class="tag"><em>🔬</em>Sciences du vivant</div>
+        <div><h3>Observer et classer les animaux</h3><p>Les créatures rencontrées sont de vrais animaux du milieu. Les croiser remplit un carnet d'observation que l'enfant apprend à trier et à classer.</p></div>
+      </div>
+      <div class="row">
+        <div class="tag"><em>⏳</em>Histoire</div>
+        <div><h3>Une frise du temps à parcourir</h3><p>Un mode transforme le monde en frise historique — de la préhistoire au numérique — pour situer les grandes époques, au programme du cycle 3.</p></div>
+      </div>
+      <div class="row">
+        <div class="tag"><em>🧩</em>Réflexion &amp; langues</div>
+        <div><h3>Des énigmes pour ouvrir les coffres</h3><p>Chaque coffre s'ouvre par un défi&nbsp;: calcul mental, lecture attentive d'une consigne, ou premier vocabulaire anglais lié au milieu.</p></div>
+      </div>
+      <div class="row">
+        <div class="tag"><em>🌍</em>Développement durable</div>
+        <div><h3>Gérer une ressource qui s'épuise</h3><p>Les sources d'eau se tarissent. L'enfant apprend à anticiper et à ménager une ressource limitée — une première sensibilisation à l'écologie.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:12px">
+  <div class="wrap">
+    <div class="panel">
+      <p class="eyebrow">Pensé pour la classe</p>
+      <h2 style="margin-top:6px">Un vrai outil pour l'enseignant</h2>
+      <p class="intro" style="margin-bottom:22px">Arpente se pilote depuis un tableau de bord enseignant, conçu pour un usage collectif, encadré et sans contrainte technique.</p>
+      <div class="feat">
+        <div><h4><em>🎯</em>Un monde réglable</h4><p>L'enseignant choisit le thème, le niveau (du CP au CM2), la durée de la séance, et désactive les dangers d'un geste.</p></div>
+        <div><h4><em>🔗</em>Même code, même monde</h4><p>Un simple code ou QR code donne à toute la classe le même monde&nbsp;: chacun trace son chemin, l'enseignant compare les parcours.</p></div>
+        <div><h4><em>📄</em>Un bilan de séance</h4><p>En fin de partie, un récapitulatif reprend le trajet et le carnet d'observation de l'élève, prêt à commenter en classe.</p></div>
+        <div><h4><em>🔊</em>Accessible aux non-lecteurs</h4><p>Tous les textes peuvent être lus à voix haute, pour que les plus jeunes jouent en autonomie.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">La confiance des familles et des écoles</p>
+    <h2>Sûr, sobre, respectueux</h2>
+    <div class="trust">
+      <div class="t"><b>Sans compte, sans donnée</b><span>Aucune inscription, aucune donnée d'élève collectée ni envoyée. Conçu dès l'origine pour des enfants mineurs, dans le respect du RGPD.</span></div>
+      <div class="t"><b>Sans distraction</b><span>Pas de publicité, pas d'achat caché, pas de chrono anxiogène. Rien qui détourne l'enfant de la découverte.</span></div>
+      <div class="t"><b>Signé par un éditeur</b><span>Un contenu conçu par un spécialiste de l'ingénierie pédagogique numérique, aligné sur les programmes officiels.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h2 class="display">Bientôt disponible sur Android.</h2>
+    <p>Arpente arrive très prochainement. Un monde à arpenter, mille choses à apprendre.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="display">Arpente</div>
+    <p style="margin:6px 0 0">Édité par AA Digital Learning Systems — ingénierie et édition de supports pédagogiques numériques.<br>Nom d'application provisoire. Fonctionnalités présentées à titre indicatif dans le cadre d'une publication à venir.</p>
+  </div>
+</footer>
+
+</body>
+</html>
